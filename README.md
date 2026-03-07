@@ -43,6 +43,7 @@ This project moves beyond basic statistics by blending **Machine Learning (Rando
 
 4. **Launch the Dashboard:**
    ```bash
+   # Run from the project root. The imghdr.py shim fixes compatibility on Python 3.13+
    python3 -m streamlit run src/app.py
    ```
 

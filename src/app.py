@@ -1,12 +1,3 @@
-import sys
-try:
-    import imghdr
-except ImportError:
-    import types
-    imghdr = types.ModuleType("imghdr")
-    imghdr.what = lambda file, h=None: None
-    sys.modules["imghdr"] = imghdr
-
 import streamlit as st
 import pandas as pd
 import numpy as np
