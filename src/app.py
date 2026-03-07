@@ -82,7 +82,7 @@ with col1:
     pitch_type = st.radio("Ahmedabad Surface", ["Pace-Friendly (Red Soil)", "Spin-Friendly (Black Soil)"])
     pitch_is_pace_friendly = 1 if "Pace" in pitch_type else 0
 
-    st.divider()
+    st.markdown("---")
     st.subheader("🪙 Toss")
     toss_winner = st.radio("Who wins the toss?", ["India", "New Zealand"])
     toss_decision = st.radio("Decision?", ["Bowl First (Chase)", "Bat First (Defend)"])
@@ -104,7 +104,7 @@ with col2:
         
         st.write(f"🌡️ **Temp:** {temp}°C | 💧 **Humidity:** {humidity}%")
         st.write(f"🌫️ **Dew Forecast:** Heavy ({dew_intensity*100}%)")
-        st.divider()
+        st.markdown("---")
         st.write("**IND Tournament Stats:**")
         st.write("• Chakaravarthy: 13 Wkts (Lead)")
         st.write("• Ishan Kishan: 263 Runs")
@@ -185,13 +185,13 @@ with col3:
         else:
             s2 = min(s2, s1 - 12)
 
-        st.divider()
+        st.markdown("---")
         st.subheader("🎯 Projected Scoreline")
         st.write(f"**1st Innings ({first}):** {int(s1)}/6")
         st.write(f"**2nd Innings ({second}):** {int(s2)}/4")
         st.caption(f"Score adjusted for {temp}°C heat and {int(dew_intensity*100)}% dew impact.")
 
-        st.divider()
+        st.markdown("---")
         st.subheader("🌟 Projected Key Performers")
         col_ind, col_nz = st.columns(2)
         with col_ind:
