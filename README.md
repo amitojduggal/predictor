@@ -43,8 +43,8 @@ This project moves beyond basic statistics by blending **Machine Learning (Rando
 
 4. **Launch the Dashboard:**
    ```bash
-   # Use the run.py entry point to fix imghdr compatibility on Python 3.13+
-   python3 run.py
+   # Running from the root. The local imghdr/ package fixes compatibility on Python 3.13+
+   python3 -m streamlit run src/app.py
    ```
 
 ## 🧠 Model Logic: The Hybrid Approach
