@@ -250,12 +250,12 @@ with res_c2:
         sc1, sc2 = st.columns(2)
         with sc1:
             st.markdown(f"### 1st: {first_t}")
-            st.write(f"## {s1}/6")
+            st.write(f"## {score1}/6")
             for x in b1: st.write(x)
             for y in bw1: st.caption(y)
         with sc2:
             st.markdown(f"### 2nd: {second_team}")
-            st.write(f"## {s2}/4")
+            st.write(f"## {score2}/4")
             for x in b2: st.write(x)
             for y in bw2: st.caption(y)
     else:
