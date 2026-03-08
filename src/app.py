@@ -1,18 +1,22 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-import joblib
-import os
 import sys
+import types
 
-# imghdr shim for Python 3.13+
+# imghdr shim for Python 3.13+ MUST BE AT THE VERY TOP
 try:
     import imghdr
 except ImportError:
-    import types
     imghdr = types.ModuleType("imghdr")
     imghdr.what = lambda file, h=None: None
     sys.modules["imghdr"] = imghdr
+
+import streamlit as st
+import pandas as pd
+import numpy as np
+try:
+    import joblib
+except ImportError:
+    from sklearn.utils import _joblib as joblib
+import os
 
 # PREMIUM UI CONFIG
 st.set_page_config(page_title="Cricket Predictor Pro", page_icon="🏏", layout="wide", initial_sidebar_state="expanded")
@@ -32,14 +36,13 @@ st.markdown("""
         padding-bottom: 1rem !important;
     }
 
-    /* Custom Cards */
-    .metric-card {
-        background: rgba(255, 255, 255, 0.05);
+    /* Auto-style all containers as cards */
+    div[data-testid="column"] {
+        background: rgba(255, 255, 255, 0.03);
         padding: 15px;
         border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         backdrop-filter: blur(10px);
-        margin-bottom: 10px;
     }
 
     /* Headlines */
@@ -158,25 +161,17 @@ st.subheader("Grand Final: India vs New Zealand")
 # TOP ROW: CONDITIONS
 r1_c1, r1_c2, r1_c3, r1_c4 = st.columns(4)
 with r1_c1:
-    st.markdown('<div class="metric-card">', unsafe_allow_html=True)
     st.caption("🏟️ VENUE")
     venue = st.selectbox("", ["Ahmedabad (Home)", "Neutral", "Auckland"], label_visibility="collapsed")
-    st.markdown('</div>', unsafe_allow_html=True)
 with r1_c2:
-    st.markdown('<div class="metric-card">', unsafe_allow_html=True)
     st.caption("🌱 PITCH")
     pitch_type = st.radio("", ["Red Soil (Pace)", "Black Soil (Spin)"], label_visibility="collapsed")
-    st.markdown('</div>', unsafe_allow_html=True)
 with r1_c3:
-    st.markdown('<div class="metric-card">', unsafe_allow_html=True)
     st.caption("🪙 TOSS WINNER")
     toss_winner = st.radio("", ["India", "NZ"], label_visibility="collapsed")
-    st.markdown('</div>', unsafe_allow_html=True)
 with r1_c4:
-    st.markdown('<div class="metric-card">', unsafe_allow_html=True)
     st.caption("🎯 TOSS DECISION")
     toss_decision = st.radio("", ["Bowl First", "Bat First"], label_visibility="collapsed")
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # SIMULATION AREA
 st.markdown("---")
@@ -246,19 +241,21 @@ with res_c2:
             first_t, second_team = "IND", "NZ"
             f_idx, s_idx = ind_matchup, nz_matchup
 
-        s1, b1, bw1 = generate_report(first_t, f_idx, dew_intensity, base_par)
-        s2, b2, bw2 = generate_report(second_team, s_idx, dew_intensity, base_par)
+        score1, bat1, bowl1 = generate_report(first_t, f_idx, dew_intensity, base_par)
+        score2, bat2, bowl2 = generate_report(second_team, s_idx, dew_intensity, base_par)
         if (india_prob > 0.5 and second_team == "IND") or (india_prob < 0.5 and second_team == "NZ"):
-            s2 = s1 + 2
-        else: s2 = min(s2, s1 - 10)
+            score2 = score1 + 2
+        else: score2 = min(score2, score1 - 10)
 
         sc1, sc2 = st.columns(2)
         with sc1:
-            st.markdown(f'<div class="metric-card"><h3>1st: {first_t}</h3><h2>{s1}/6</h2></div>', unsafe_allow_html=True)
+            st.markdown(f"### 1st: {first_t}")
+            st.write(f"## {s1}/6")
             for x in b1: st.write(x)
             for y in bw1: st.caption(y)
         with sc2:
-            st.markdown(f'<div class="metric-card"><h3>2nd: {second_team}</h3><h2>{s2}/4</h2></div>', unsafe_allow_html=True)
+            st.markdown(f"### 2nd: {second_team}")
+            st.write(f"## {s2}/4")
             for x in b2: st.write(x)
             for y in bw2: st.caption(y)
     else:
