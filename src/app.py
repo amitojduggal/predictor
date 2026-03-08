@@ -241,8 +241,8 @@ with res_c2:
             first_t, second_team = "IND", "NZ"
             f_idx, s_idx = ind_matchup, nz_matchup
 
-        score1, bat1, bowl1 = generate_report(first_t, f_idx, dew_intensity, base_par)
-        score2, bat2, bowl2 = generate_report(second_team, s_idx, dew_intensity, base_par)
+        score1, b1, bw1 = generate_report(first_t, f_idx, dew_intensity, base_par)
+        score2, b2, bw2 = generate_report(second_team, s_idx, dew_intensity, base_par)
         if (india_prob > 0.5 and second_team == "IND") or (india_prob < 0.5 and second_team == "NZ"):
             score2 = score1 + 2
         else: score2 = min(score2, score1 - 10)
